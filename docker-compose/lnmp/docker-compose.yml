@@ -45,7 +45,8 @@ services:
         image: php-dev:1.0.0
         privileged: true
         volumes:
-            - /etc/resolv.conf:/etc/resolv.conf
+            - /www/docker-compose/lnmp/data/hosts:/etc/hosts
+            - /www/docker-compose/lnmp/data/resolv.conf:/etc/resolv.conf
             - /www/docker-compose/lnmp/data/nginx/html:/usr/share/nginx/html
             - /www/docker-compose/lnmp/data/php/logs:/usr/local/var/log
         #    - /www/docker-compose/lnmp/data/php/php.ini:/usr/local/etc/php/php.ini
