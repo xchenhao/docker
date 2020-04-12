@@ -43,7 +43,7 @@ services:
     php:
         container_name: php
         # redis/memcache 扩展
-        image: php-dev-runtime:1.0.0
+        image: php-dev:1.0.0
         privileged: true
         volumes:
             - /www/docker-compose/lnmp/data/nginx/html:/usr/share/nginx/html
