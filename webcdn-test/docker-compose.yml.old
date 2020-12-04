@@ -1,0 +1,49 @@
+# https://docs.docker.com/compose/compose-file/
+# Use root/example as user/password credentials
+version: '3.1'
+
+# https://stackoverflow.com/questions/41334488/error-in-file-docker-compose-yml-volume-must-be-a-mapping-not-a-string
+# In Windows System, Docker Desktop should add current project directory to "Fire Sharing", else directory mounting will fail
+volumes:
+  code-dir:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /c/dev/www/docker/webcdn-test/php-code-dir
+
+networks:
+  lnmp-net:
+    driver: bridge
+
+services:
+  openresty:
+    container_name: openresty
+    image: openresty/openresty
+    ports:
+    # external port: internal port
+    - 34567:80
+    privileged: true
+    volumes:
+    - /c/dev/www/docker/webcdn-test/nginx-conf-dir/nginx.conf:/etc/nginx/nginx.conf
+    - /c/dev/www/docker/webcdn-test/nginx-conf-dir/conf.d:/etc/nginx/conf.d
+    - /c/dev/www/docker/webcdn-test/nginx-conf-dir/logs:/var/log/nginx
+    - code-dir:/usr/share/nginx/html/php-code-dir
+    depends_on:
+    - php
+    restart: always
+    networks:
+    - lnmp-net
+
+  php:
+    container_name: php
+    image: php:7.4-fpm
+    privileged: true
+    volumes:
+    - /c/dev/www/docker/webcdn-test/php-conf-dir/logs:/usr/local/var/log
+    - /c/dev/www/docker/webcdn-test/php-conf-dir/php.ini:/usr/local/etc/php/php.ini
+    - /c/dev/www/docker/webcdn-test/php-conf-dir/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    - code-dir:/usr/share/nginx/html/php-code-dir
+    restart: always
+    networks:
+    - lnmp-net

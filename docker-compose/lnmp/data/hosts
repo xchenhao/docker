@@ -6,8 +6,10 @@ ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
-172.18.0.6 nginx
-172.18.0.5 redis
-172.18.0.4 mariadb
-172.18.0.3 memcached
-172.18.0.2 php
+#172.18.0.6 nginx
+#172.18.0.5 redis
+#172.18.0.4 mariadb
+#172.18.0.3 memcached
+#172.18.0.2 php
+
+10.21.250.10 redis.srv.maoer.co

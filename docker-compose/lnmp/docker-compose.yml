@@ -4,21 +4,21 @@ networks:
     lnmp-net:
         driver: bridge
 services:
-    mariadb:
-        container_name: mariadb
-        image: mariadb:10.4
-        ports:
-            - 3307:3306
-        environment:
-            MYSQL_ROOT_PASSWORD: 123456
-        privileged: true
-        volumes:
-            - /www/docker-compose/lnmp/data/mariadb/db:/var/lib/mysql
-        #    - /www/docker-compose/lnmp/data/mariadb/conf.d:/etc/my.cnf.d
-            - /www/docker-compose/lnmp/data/mariadb/logs:/var/log/mariadb
-        restart: always
-        networks:
-            - lnmp-net
+#    mariadb:
+#        container_name: mariadb
+#        image: mariadb:10.4
+#        ports:
+#            - 3307:3306
+#        environment:
+#            MYSQL_ROOT_PASSWORD: 123456
+#        privileged: true
+#        volumes:
+#            - /www/docker-compose/lnmp/data/mariadb/db:/var/lib/mysql
+#        #    - /www/docker-compose/lnmp/data/mariadb/conf.d:/etc/my.cnf.d
+#            - /www/docker-compose/lnmp/data/mariadb/logs:/var/log/mariadb
+#        restart: always
+#        networks:
+#            - lnmp-net
     nginx:
         container_name: nginx
         image: nginx:1.16.1
@@ -28,14 +28,19 @@ services:
             - 8080:8080
         privileged: true
         volumes:
-            - /www/docker-compose/lnmp/data/nginx/html:/usr/share/nginx/html
+            - /c/dev/www/MissEvan_Web:/usr/share/nginx/html/missevan-web
+            - /c/dev/www/MissEvanMobile:/usr/share/nginx/html/missevan-app
+            - /c/dev/www/missevan_drama:/usr/share/nginx/html/missevan-drama
+
+#            - /www/docker-compose/lnmp/data/nginx/html:/usr/share/nginx/html
         #    - /www/docker-compose/lnmp/data/nginx/nginx.conf:/etc/nginx/nginx.conf
-            - /www/docker-compose/lnmp/data/nginx/conf.d:/etc/nginx/conf.d
-            - /www/docker-compose/lnmp/data/nginx/logs:/var/log/nginx
+
+            - /c/dev/www/docker/docker-compose/lnmp/data/logs/nginx:/var/log/nginx
+            - /c/dev/www/docker/docker-compose/lnmp/data/nginx/conf.d:/etc/nginx/conf.d
         depends_on:
-            - mariadb
-            - redis
-            - memcached
+#            - mariadb
+#            - redis
+#            - memcached
             - php
         restart: always
         networks:
@@ -46,34 +51,40 @@ services:
         privileged: true
         volumes:
             - /www/docker-compose/lnmp/data/hosts:/etc/hosts
-            - /www/docker-compose/lnmp/data/resolv.conf:/etc/resolv.conf
-            - /www/docker-compose/lnmp/data/nginx/html:/usr/share/nginx/html
-            - /www/docker-compose/lnmp/data/php/logs:/usr/local/var/log
+#            - /www/docker-compose/lnmp/data/resolv.conf:/etc/resolv.conf
+#            - /C/dev/www/docker/docker-compose/data/nginx/html:/usr/share/nginx/html
+            - /c/dev/www/MissEvan_Web:/usr/share/nginx/html/missevan-web
+            - /c/dev/www/MissEvanMobile:/usr/share/nginx/html/missevan-app
+            - /c/dev/www/missevan_drama:/usr/share/nginx/html/missevan-drama
+            - /c/dev/www/docker/docker-compose/lnmp/data/logs/php:/usr/local/var/log
+
+#            - /www/docker-compose/lnmp/data/nginx/html:/usr/share/nginx/html
+#            - /www/docker-compose/lnmp/data/php/logs:/usr/local/var/log
         #    - /www/docker-compose/lnmp/data/php/php.ini:/usr/local/etc/php/php.ini
         #    - /www/docker-compose/lnmp/data/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
         restart: always
         networks:
             - lnmp-net
-    redis:
-        container_name: redis
-        image: redis:5.0.7
-        ports:
-            - 6379:6379
-        privileged: true
-        volumes:
-            - /www/docker-compose/lnmp/data/redis/data:/data
-            - /www/docker-compose/lnmp/data/redis/db:/var/lib/redis
-            - /www/docker-compose/lnmp/data/redis/logs:/var/log/redis
-        restart: always
-        networks:
-            - lnmp-net
-    memcached:
-        container_name: memcached
-        image: memcached
-        ports:
-            - 11211:11211
-        command: -m 64
-        privileged: true
-        restart: always
-        networks:
-            - lnmp-net
+#    redis:
+#        container_name: redis
+#        image: redis:5.0.7
+#        ports:
+#            - 6379:6379
+#        privileged: true
+#        volumes:
+#            - /www/docker-compose/lnmp/data/redis/data:/data
+#            - /www/docker-compose/lnmp/data/redis/db:/var/lib/redis
+#            - /www/docker-compose/lnmp/data/redis/logs:/var/log/redis
+#        restart: always
+#        networks:
+#            - lnmp-net
+#    memcached:
+#        container_name: memcached
+#        image: memcached
+#        ports:
+#            - 11211:11211
+#        command: -m 64
+#        privileged: true
+#        restart: always
+#        networks:
+#            - lnmp-net
