@@ -15,8 +15,8 @@ services:
     - /c/dev/www/docker/webcdn-test/nginx-conf-dir/lua:/lua
     - /c/dev/www/docker/webcdn-test/nginx-conf-dir/logs:/var/log/nginx
     - /c/dev/www/docker/webcdn-test/nginx-conf-dir/html:/www
-    depends_on:
-    - php
+#    depends_on:
+#    - php
     restart: always
     networks:
     - lnmp-net
